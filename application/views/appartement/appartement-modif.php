@@ -8,8 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <section id="modifierAppartement">
 <div class="form-group row">
   <label class="col-md-3">Arrondissement</label>
-<!--   <input class="col-md-3"  id="arrond" value="" type="text" readonly class="form-control-plaintext lead pt-0 pb-3" >
- -->  <select class="form-control-plaintext champ col-md-3" readonly>
+    <select class="form-control-plaintext champ col-md-3" readonly>
       <?php foreach($arrondissements as $arrond){?>
 
       <option id="arrond" value="<?php echo $arrond->idArrondissement;?>"><?php echo $arrond->nomArrondissement;?></option>

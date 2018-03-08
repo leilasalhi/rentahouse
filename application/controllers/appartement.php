@@ -75,23 +75,6 @@ class appartement extends CI_Controller {
   }
 
   /**
-   * Suppression d'un appartement
-   */  
-  public function supprimerAppartement() {
-    $id = $this->input->post("idAppart");
-    if(isset($id)) {
-      if($id!=""){
-        $suppression= $this->Appartements_model->suppression_appartementParId($id);
-        if($suppression){
-          echo true;
-        } else {
-          echo false;
-        }
-      }
-    }  
-  }
-
-  /**
    * charge le formulaire de modification d'appartement
    */
   public function modifierAppartement() {
@@ -108,6 +91,7 @@ class appartement extends CI_Controller {
     $id = $this->input->post("id");
     $arrondissement = $this->input->post("arrondissement");
     $adresse = $this->input->post("adresse");
+    $titre = $this->input->post("titre");
     $codePostal = $this->input->post("codePostal");
     $type = $this->input->post("type");
     $piece = $this->input->post("piece");
@@ -183,7 +167,7 @@ class appartement extends CI_Controller {
                                                                        $laveVaisselle,
                                                                        $stationnement,
                                                                        $description,
-                                                                       $proprietaire
+                                                                       $proprietaire['nomUsager']
                                                                        );
         if(!$resultat) {
           $succes = false;
@@ -198,6 +182,24 @@ class appartement extends CI_Controller {
       }
       
     }
+  }
+
+
+  /**
+   * Suppression d'un appartement
+   */  
+  public function supprimerAppartement() {
+    $id = $this->input->post("idAppart");
+    if(isset($id)) {
+      if($id!=""){
+        $suppression= $this->Appartements_model->suppression_appartementParId($id);
+        if($suppression){
+          echo true;
+        } else {
+          echo false;
+        }
+      }
+    }  
   }
 
   /**

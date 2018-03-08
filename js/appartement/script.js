@@ -38,6 +38,7 @@ window.addEventListener("load", function() {
       dataType:'json',
       success: function(result) {
         $.each(result, function(i, data) {
+        var idArron = data.idArrondissement;
         var arron = data.nomArrondissement;
         var adresse = data.Adresse;
         var titre = data.titre;
@@ -90,7 +91,8 @@ window.addEventListener("load", function() {
           success: function(data) {
           $("#contentAppartement").empty();
           $("#contentAppartement").append(data);
-          $('#arrond').val(arron);
+          $('#arrond').val(idArron);
+          $('#arrond').text(arron);
           $('#adresse').val(adresse);
           $('#titre').val(titre);
           $('#cp').val(cp);
@@ -161,6 +163,7 @@ window.addEventListener("load", function() {
       if($('#adapte').val()=="Oui") $meuble='1'; else $meuble='0';
       if($('#lavSech').val()=="Oui") $laveuseSecheuse='1'; else $laveuseSecheuse='0';
       if($('#lavVaiss').val()=="Oui") $laveVaisselle='1'; else $laveVaisselle='0';
+      alert($("#arrond").val());
       $.ajax({
         url: "valider_modification",
         type: "POST",
@@ -185,6 +188,7 @@ window.addEventListener("load", function() {
         },
         success: function(data) {
           if(data==false){
+
             $.ajax({
               url: "contenu_index",
               type: "POST",
@@ -217,10 +221,13 @@ window.addEventListener("load", function() {
               url: "contenu_index",
               type: "POST",
               success: function(reponse) {
+                setTimeout(function() {
+                $("input").addClass('correct');
                 $("#contentAppartement").empty();
-                $("#contentAppartement").append(reponse);
+                $("#contentAppartement").append(reponse);}, 1000);
               }
             });
+          
           }
         }
       });

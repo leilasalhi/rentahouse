@@ -183,11 +183,10 @@ class Appartements_model extends CI_Model {
           "idArrondissement" => $arrondissement,
           "proprietaire" => $proprietaire
         );
-var_dump($data);
     $query1 = $this->db->where('idAppart', $id);
     $query2 = $this->db->update('appartement', $data); 
 
-   if($query && $query2)
+   if($query1 && $query2)
      return true;
    else
     return false;

@@ -7,7 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="container">
   <div id='contentAppartement'>
     <div class='d-flex flex-wrap justify-content-end position'>
-      <button class="btn btn-primary" id="ajouter">Ajouter</button>
+      <button class="btn btn-success" id="ajouter">Ajouter</button>
       <button class="btn btn-info" id="validerLocation">Mes locations</button>
     </div>
     
