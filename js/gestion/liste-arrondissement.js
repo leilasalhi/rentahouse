@@ -1,5 +1,5 @@
 window.addEventListener("load", function() {
-  $(document.body).on("click", "a", function(evt) {
+  $(document.body).on("click", "section#arrondissements a", function(evt) {
     var id_arrondissement = $(this).parent().data("id_arrondissement");
     switch($(this).attr("id")){
       case "btn_modifier" :

@@ -8,12 +8,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script type="text/javascript" async="true" src="<?=base_url();?>js/gestion/liste-usagers.js"></script>
 <!-- script panneaux gestion arrondissements -->
 <script type="text/javascript" async="true" src="<?=base_url();?>js/gestion/liste-arrondissement.js"></script>
+<!-- script panneaux gestion des moyens de paiement -->
+<script type="text/javascript" async="true" src="<?=base_url();?>js/gestion/liste-moyens-paiement.js"></script>
 <div class="container-fluid">
   <div class="row">
     <section id="admin_menu" class="col-md-3 col-lg-2 px-0">
       <ul class="nav flex-column">
         <li class="nav-item"><a id="usagers" class="nav-link active" href="#" onclick='return false'>Usagers</a></li>
-        <li class="nav-item"><a id="statistiques" class="nav-link" href="#" onclick='return false'>Statistiques</a></li>
+        <!-- <li class="nav-item"><a id="statistiques" class="nav-link" href="#" onclick='return false'>Statistiques</a></li> -->
         <li class="nav-item"><a id="arrondissements" class="nav-link" href="#" onclick='return false'>Arrondissements</a></li>
         <li class="nav-item"><a id="moyensDePaiements" class="nav-link" href="#" onclick='return false'>Moyens de paiements</a></li>
       </ul>
