@@ -234,8 +234,6 @@ window.addEventListener("load", function() {
     });
   });
 
-
-
   //soumettre les informations d'ajout d'appartement au controlleur
   $(document).on("click",'button#enregistrerAppartement',function() {
       validerFormulaireAjout($(this).parents("#inscrireAppartement-form"));
@@ -257,6 +255,9 @@ window.addEventListener("load", function() {
   //affichage des disponibilités pour un appartement choisi
   $(document).on("click", "button#idAppart", function(evt) {
     var id = $(this).attr('value');
+    $("#modalIdAppart").val(id);
+    
+
     $.ajax({
       url: "dateDispo",
       type: "POST",
@@ -295,15 +296,14 @@ window.addEventListener("load", function() {
         }
       }
     });
-
-    //clique sur le bouton pour enregistrer une disponibilité avec le prix de location
-    $(document).on("click", "button#mettreEnLocation", function(evt) {
-      validerlogementAlouer($(this).parents(".formulaireAlouer"),id);
-    });
   });
 
+  //clique sur le bouton pour enregistrer une disponibilité avec le prix de location
+  $(document).on("click", "button#mettreEnLocation", function(evt) {
+      validerlogementAlouer($(this).parents(".formulaireAlouer"));
+  });
   //fonction de validation formulaire pour mettre un appartement disponibilte 
-  function validerlogementAlouer(formulaire,id){
+  function validerlogementAlouer(formulaire){
     var valideAlouer = true;
     formulaire.children("div").each(function() {
       var valeur = $(this).find(".champ");
@@ -322,7 +322,7 @@ window.addEventListener("load", function() {
           "dateDebut":$('#dDebut').val(),
           "dateFin":$('#dFin').val(),
           "prix":$('#prix').val(),
-          "id": id,
+          "id": $("#modalIdAppart").val(),
           "interval": $('input[name=interval]:checked').val()
         },
         success: function(data) {

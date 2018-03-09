@@ -6,6 +6,7 @@
     <div class="detailAppart">
       <div class="detailLog row">
         <div class="descriptionAppart col-md-6">
+          <input type="hidden" value="<?php echo $location->idAppart;?>">
           <h5 class="titre">Proprietaire : <?php echo $location->Proprietaire;?></h5>
           <p>Date de la demande : <?php echo $location->DateDemandeLocation;?></p>
           <p>Location du : <?php echo $location->DateDebutLocation;?> au <?php echo $location->DateFinLocation;?></p>
@@ -26,10 +27,10 @@
         </div>
         <?php if($location->estValide==1){?>
         <p class="locationValide" style="font-size:1.2em;">votre demande est approuvée par le proprietaire</p>
-        <button class="btn btn-success" id="payer" value="<?php echo $location->idAppart;?>">Passer au paiement</button>
+        <!-- <button class="btn btn-success" id="payer" value="<?php echo $location->idAppart;?>">Passer au paiement</button> -->
         <?php } else {?>
         <div class="row btnValider">
-          <p class="locationNonValide" style="font-size:1.2em;"> En attente de validation</p>
+          <p class="locationNonValide" style="font-size:1.2em;"> En attente de validation par le proprietaire</p>
         </div>
         <?php } ?>
     </div>

@@ -1,7 +1,7 @@
 <?php
 /**
  * @file      Usagers_model.php
- * @author    Yamani & Mathieu
+ * @author    Yamani & Mathieu & Leila
  * @version   1.0
  * @date      13 février 2018
  * @brief     accées et vérification et CRUD sur les données des utilisateurs
@@ -10,16 +10,13 @@
  *            accès aux données des utilisateurs selon des parametres choisis,
  *            opérations CRUD sur table utilisateur.
  */
-
 class Usagers_model extends CI_Model {
-
   /**
   * contructeur
   */
   public function __construct() {
     $this->load->database();
   }
-
   /**
    * Retourne un usager.
    *
@@ -31,9 +28,6 @@ class Usagers_model extends CI_Model {
     $query = $this->db->get_where("usager", array("nomUsager" => $username));
     return $query->row_array();
   }
-
-
-
   /**
    * inscrire un nouveau utilisateur dans la base de donnée
    *
@@ -69,7 +63,6 @@ class Usagers_model extends CI_Model {
       return true;
     }
   }
-
   /**
    * vérifier si l'utilisateur est deja inscrit dans la base de donnée
    *
@@ -96,30 +89,42 @@ class Usagers_model extends CI_Model {
     }
     return $reponse;
   }
-
   /**
    * modification données de l'utilisateur dans la base de donnée
    *
    * @param      string  $nomUsager   le nom usager
    * @param      string  $Nom         le nom
    * @param      string  $Prenom      le prenom
-   * @param      string  $motDePasse  le mot de passe
    * @param      string  $Adresse     l'adresse
    * @param      string  $typePaiem   le type de paiement
    */
-  public function modifier_usager($nomUsager, $Nom, $Prenom, $motDePasse, $Adresse, $typePaiem) {
+  public function modifier_usager($nomUsager, $Nom, $Prenom, $Adresse, $typePaiem) {
     //ce tableau contient toutes les nouvelles données, récupérées du formulaire de modification
     $data = array (
       "Nom" => $Nom,
       "Prenom" => $Prenom,
-      "motDePasse" =>  password_hash($motDePasse, PASSWORD_DEFAULT),
       "Adresse" => $Adresse,
-      "typePaiem" => $typePaiem,
+      "typePaiem" => $typePaiem
     );
     $this->db->where('nomUsager', $nomUsager);
-    $this->db->update('Usager', $data);
+    return $this->db->update('Usager', $data);
   }
 
+  /**
+   * Modifie la photo d'un usager
+   *
+   * @param      STRING  $nomUsager    Le nom de l'usager
+   * @param      STRING  $cheminPhoto  Le chemin de la photo
+   *
+   * @return     ? True si la requete a fonctionnee
+   */
+  public function modifier_img_profile($nomUsager, $cheminPhoto) {
+    $data = array (
+      "cheminPhoto" => $cheminPhoto
+    );
+    $this->db->where('nomUsager', $nomUsager);
+    return $this->db->update('Usager', $data);
+  }
   /**
    * suppression d'un utilisateur
    *
@@ -129,7 +134,6 @@ class Usagers_model extends CI_Model {
     $this->db->where('nomUsager', $nomUsager);
     $this->db->delete('Usager');
   }
-
   /**
    * changer le status d'un utilisateur de valide a invalide et le contraire
    *
@@ -144,7 +148,6 @@ class Usagers_model extends CI_Model {
     $this->db->where('nomUsager', $nomUsager);
     $this->db->update('Usager', $data);
   }
-
   /**
    * changer le role d'un utilisateur
    *
@@ -173,7 +176,6 @@ class Usagers_model extends CI_Model {
     $this->db->where('nomUsager', $nomUsager);
     $this->db->update('Usager', $data);
   }
-
   /**
    * affichage des utilisateur ayant un roe précis
    *
@@ -187,13 +189,10 @@ class Usagers_model extends CI_Model {
     $this->db->join('Role', 'Usager.idRole = Role.idRole');
     $this->db->where('Role', $Role);
     $this->db->order_by('nomUsager', 'DESC');//trie par le nomUsager
-
     $query = $this->db->get();
-
     //tableau de resultats
     return $query->result_array();
   }
-
   /**
    * affichage de tout les usagers banni ou pas banni
    *
@@ -205,8 +204,6 @@ class Usagers_model extends CI_Model {
     $query = $this->db->get_where("Usager", array("estBanni" => $estBanni));
     return $query->result_array();
   }
-
-
   /**
    * affichage de tout les usagers valides ou pas valides
    *
@@ -218,7 +215,6 @@ class Usagers_model extends CI_Model {
     $query = $this->db->get_where("Usager", array("estValide" => $estValide));
     return $query->result_array();
   }
-
   /**
    * affichage de tous les utilisateurs ayant un mode de paiement choisi
    *
@@ -230,7 +226,6 @@ class Usagers_model extends CI_Model {
     $query = $this->db->get_where("Usager", array("typePaiem" => $typePaiem));
     return $query->result_array();
   }
-
   /**
    * affichage de tout les usagers ayant été validés par un administrateur précis
    *
@@ -242,8 +237,6 @@ class Usagers_model extends CI_Model {
     $query = $this->db->get_where("Usager", array("Validateur" => $Validateur));
     return $query->result_array();
   }
-
-
   /**
    * affichage de toutes les données des utilisateurs pour l'administrateur, ordre par defaut sur la clé primaire nomUsager
    *
@@ -263,5 +256,4 @@ class Usagers_model extends CI_Model {
     }
     return $usagers;
   }
-
 }//Fin de la classe

@@ -39,7 +39,7 @@ class appartement extends CI_Controller {
       header("Location: index.php/atterrissage/index");
     }
   }
-  
+
   /**
    * afficher les appartements dans le contenu de la page mes logements
    */
@@ -71,7 +71,24 @@ class appartement extends CI_Controller {
         $appartement= $this->Appartements_model->obtenir_appartementParId($id);
         echo json_encode($appartement);
       }
-    }   
+    }
+  }
+
+  /**
+   * Suppression d'un appartement
+   */
+  public function supprimerAppartement() {
+    $id = $this->input->post("idAppart");
+    if(isset($id)) {
+      if($id!=""){
+        $suppression= $this->Appartements_model->suppression_appartementParId($id);
+        if($suppression){
+          echo true;
+        } else {
+          echo false;
+        }
+      }
+    }
   }
 
   /**
@@ -129,7 +146,7 @@ class appartement extends CI_Controller {
         $succes = false;
     } else {
       //S'il y a des donnees qui sont vides
-      if($id == "" || 
+      if($id == "" ||
          $arrondissement == "" ||
          $adresse == "" ||
          $codePostal == "" ||
@@ -150,7 +167,7 @@ class appartement extends CI_Controller {
          $succes = false;
       } else {
         // ajout d'un appartement dans la base de donnée
-        $resultat = $this->Appartements_model->modifier_appartement($id, 
+        $resultat = $this->Appartements_model->modifier_appartement($id,
                                                                        $arrondissement,
                                                                        $adresse,
                                                                        $titre,
@@ -180,27 +197,10 @@ class appartement extends CI_Controller {
         $data["erreur"] = true;
         $this->load->view("appartement/message_insertion.php", $data);
       }
-      
+
     }
   }
 
-
-  /**
-   * Suppression d'un appartement
-   */  
-  public function supprimerAppartement() {
-    $id = $this->input->post("idAppart");
-    if(isset($id)) {
-      if($id!=""){
-        $suppression= $this->Appartements_model->suppression_appartementParId($id);
-        if($suppression){
-          echo true;
-        } else {
-          echo false;
-        }
-      }
-    }  
-  }
 
   /**
   * enregistrer les données saisies dans le formulaire d'ajout d'une nouvelle annonce
@@ -333,7 +333,7 @@ class appartement extends CI_Controller {
         $data["erreur"] = true;
         $this->load->view("appartement/message_insertion.php", $data);
       }
-      
+
     }
   }
   /**
@@ -363,22 +363,22 @@ class appartement extends CI_Controller {
             $succes = false;
           }
         }
-      } 
+      }
       if($succes) {
           $data["erreur"] = false;
       } else {
           $data["erreur"] = true;
       }
-      
+
       $this->load->view("appartement/message_insertion.php", $data);
     }
   }
-  
+
   /**
   * afficher les dates disponibilités ajoutées a un appartement
   */
   public function dateDispo(){
-    
+
     $id = $this->input->post("idAppart");
     if(isset($id)){
       if($id!=""){
@@ -386,21 +386,21 @@ class appartement extends CI_Controller {
         echo json_encode($donnees);
       }
     }
-    
+
   }
 
   /**
   * afficher les dates de locations ajoutées a un appartement
   */
   public function mesLocationEnregistres(){
-    
+
     $id = $this->input->post("idAppart");
     if(isset($id)){
       if($id!=""){
         $location = $this->Appartements_model->dateLocation($id);
         echo json_encode($location);
       }
-    }  
+    }
   }
 
   /**
@@ -422,7 +422,7 @@ class appartement extends CI_Controller {
     $data['photos'] = $this->Appartements_model->afficherPhoto();
     $this->load->view("appartement/obtenir_location.php", $data);
   }
-  
+
   /**
   * Afficher la liste des locations de l'usager
   */
@@ -435,9 +435,9 @@ class appartement extends CI_Controller {
           redirect("index.php/appartement/demandeLocationEnCours");
         }
       }
-    }    
+    }
   }
-  
+
   /**
   * Afficher les photos d'un appartement
   */
@@ -445,5 +445,5 @@ class appartement extends CI_Controller {
     $photos = $this->Appartements_model->afficherPhoto();
     return $photos;
   }
-  
+
 } //fin du controleur

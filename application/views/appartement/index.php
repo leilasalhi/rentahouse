@@ -19,6 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="detailLog row">
           <div class="descNotation col-md-6">
             <div class="descriptionAppart">
+              <input type="hidden" value="<?php echo $appart->idAppart;?>">
               <h5 class="titre"><?php echo $appart->titre;?></h5>
               <p class="adresse"><?php echo $appart->Adresse;?> <?php echo $appart->codePostal;?></p>
               
@@ -27,7 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div>
               <?php $i = 0; $sommeNote=0; ?>
               <?php foreach($notes as $note){?>
-                <?php if($note->idAppart==$appart->idAppart){?>
+                <?php if(($note->idAppart==$appart->idAppart) && ($note->Note!="")){?>
                   <?php $sommeNote = $sommeNote + $note->Note;?>
                   <?php $i = $i + 1; ?>
                 <?php } ?>
@@ -35,8 +36,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               <?php if($i==0){ $i=1; }?>
               <?php $noteFinale = $sommeNote/$i;?>
               <div class="etoile">  
+                <?php if($noteFinale>0){ ?>
                 <?php for ($j=1;$j<=$noteFinale;$j++){?>
                   <i class="fas fa-star" style="color:yellow"></i>
+                <?php }?>
                 <?php }?>
               </div>
             </div>
@@ -70,7 +73,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 
 <!--  modal confirmation avant suppression-->
-  <div class="formulaireAlouer modal fade" id="modalSupp" role="dialog">
+  <div class="formulaireAlouer modal" id="modalSupp" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
       <div class="modal-header">
@@ -90,7 +93,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   </div>
 
 <!--  modal ajout disponibilite-->
-  <div class="formulaireAlouer modal fade" id="myModal2" role="dialog">
+  <div class="formulaireAlouer modal" id="myModal2" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
       <div class="modal-header">
@@ -98,6 +101,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </div>
       <div class="modal-body">
         <form class="form-horizontal"> 
+          <input type="hidden" id="modalIdAppart"/>
           <div class="form-group row">
             <label class="col-sm-4" for="dDebut">Date début:</label>
             <input type="date" class="col-sm-6 champ" id="dDebut"/>

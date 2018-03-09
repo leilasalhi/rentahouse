@@ -11,6 +11,8 @@
   color: #2980B9;
   text-align: center;
 }
+
+
 .correct {
   border-color: rgba(68, 191, 68, 0.75);
 }
@@ -25,9 +27,12 @@
 }
   
 .incorrect:focus {
-  border-color: rgba(191, 68, 68, 0.75);
-  box-shadow: 0 0 8px rgba(191, 68, 68, 0.5);
+
+	border-color: rgba(191, 68, 68, 0.75);
+	box-shadow: 0 0 8px rgba(191, 68, 68, 0.5);
 }
+
+
 .echec, .ajoutEchec, .locationNonValide{
   color: rgba(191, 68, 68, 0.75);
 }

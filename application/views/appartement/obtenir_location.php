@@ -15,7 +15,7 @@
     <div class="detailAppart">
       <div class="detailLog row">
         <div class="descriptionAppart col-md-6">
-          <a href="#" data-toggle="modal" data-target="#myModalUsager"><h5 class="titre">Locataire : <?php echo $location->Locataire;?></h5></a>
+          <h5 class="titre">Locataire : <?php echo $location->Locataire;?></h5>
           <p>Date de la demande : <?php echo $location->DateDemandeLocation;?></p>
           <p>Location du : <?php echo $location->DateDebutLocation;?> au <?php echo $location->DateFinLocation;?></p>
           <p>Prix total : <?php echo $location->MontantPaye;?>$</p>
