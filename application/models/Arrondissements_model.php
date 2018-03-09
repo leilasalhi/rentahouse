@@ -12,7 +12,7 @@ class Arrondissements_model extends CI_Model {
    *
    * @return     une liste d'objets representant les arrondissements
    */
-  public function obtenir_arrondissements(){
+  public function obtenir_arrondissements() {
     $query = $this->db->query("select table1.idArrondissement,nomArrondissement,nbreAppart
                     from (SELECT * from arrondissement) as table1
                     left join (select appartement.idArrondissement, count(idAppart) as nbreAppart

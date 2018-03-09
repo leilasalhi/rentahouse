@@ -8,6 +8,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script type="text/javascript" async="true" src="<?=base_url();?>js/gestion/liste-usagers.js"></script>
 <!-- script panneaux gestion arrondissements -->
 <script type="text/javascript" async="true" src="<?=base_url();?>js/gestion/liste-arrondissement.js"></script>
+<!-- script panneaux gestion des moyens de paiement -->
+<script type="text/javascript" async="true" src="<?=base_url();?>js/gestion/liste-moyens-paiement.js"></script>
 <div class="container-fluid">
   <div class="row">
     <section id="admin_menu" class="col-md-3 col-lg-2 px-0">
