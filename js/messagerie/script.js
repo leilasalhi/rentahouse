@@ -145,6 +145,8 @@ window.addEventListener("load", function() {
         },
         success: function(reponse) {
           console.log(reponse);
+          $("#content_box").empty();
+          $("#content_box").append(reponse);
         }
       });
     }

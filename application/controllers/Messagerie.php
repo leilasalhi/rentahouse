@@ -18,7 +18,7 @@ class Messagerie extends CI_Controller {
    * Charge la page de messagerie
    */
   public function index() {
-    if($this->session->userdata("nomUsager")){
+    if($this->session->userdata("nomUsager")) {
       if ( !file_exists(APPPATH.'views/accueil/index.php')) {
         show_404 ();
       } else {
@@ -47,11 +47,11 @@ class Messagerie extends CI_Controller {
    */
   public function liste_messages($nomUsager) {
     //Si l'usager qu'on veut afficher les messages est celui dans la session
-    if($this->session->userdata("nomUsager") == $nomUsager){
-      if ( !file_exists(APPPATH.'views/messagerie/liste-messages.php')) {
+    if($this->session->userdata("nomUsager") == $nomUsager) {
+      if (!file_exists(APPPATH.'views/messagerie/liste-messages.php')) {
         show_404 ();
       } else {
-        $data['liste_messages'] = "liste";
+        $data['liste_messages'] = $this->messagerie_model->liste_messages_usager($nomUsager);
         $this->load->view("messagerie/liste-messages.php", $data);
       }
     } else {
@@ -66,11 +66,11 @@ class Messagerie extends CI_Controller {
    */
   public function liste_message_envoyes($nomUsager) {
     //Si l'usager qu'on veut afficher les messages est celui dans la session
-    if($this->session->userdata("nomUsager") == $nomUsager){
+    if($this->session->userdata("nomUsager") == $nomUsager) {
       if ( !file_exists(APPPATH.'views/messagerie/liste-messages-envoyes.php')) {
         show_404 ();
       } else {
-        $data['liste_messages'] = "liste";
+        $data['liste_messages'] = $this->messagerie_model->liste_messages_envoyes_usager($nomUsager);
         $this->load->view("messagerie/liste-messages-envoyes.php", $data);
       }
     } else {
@@ -83,7 +83,7 @@ class Messagerie extends CI_Controller {
    */
   public function nouveau_message() {
     //Si l'usager qu'on veut afficher les messages est celui dans la session
-    if($this->session->userdata("nomUsager")){
+    if($this->session->userdata("nomUsager")) {
       if ( !file_exists(APPPATH.'views/messagerie/form-nouv-message.php')) {
         show_404 ();
       } else {
@@ -100,11 +100,18 @@ class Messagerie extends CI_Controller {
    */
   public function envoyer_message() {
     //Si l'usager qu'on veut afficher les messages est celui dans la session
-    if($this->session->userdata("nomUsager")){
+    if($this->session->userdata("nomUsager")) {
       $destinataires = $this->input->post("destinataires");
       $sujet = $this->input->post("sujet");
       $message = $this->input->post("message");
-      var_dump($destinataires, $sujet, $message);
+      $idMessageInserer = $this->messagerie_model->ajoute_message($sujet, $message, $this->session->userdata("nomUsager"));
+      $succes = $this->messagerie_model->ajoute_destinataires($idMessageInserer, $destinataires);
+      if($succes) {
+        $data['message_envoi'] = "Votre message a été envoyé";
+      } else {
+        $data['message_envoi'] = "Votre message n'a pas été envoyé. Il y a eu un problème...";
+      }
+      $this->load->view("messagerie/reponse-envoi-message.php", $data);
     } else {
       header("Location: ".base_url());
     }
