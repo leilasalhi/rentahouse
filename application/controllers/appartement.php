@@ -404,6 +404,16 @@ class appartement extends CI_Controller {
   }
 
   /**
+  * afficher mes demandes de location
+  */
+  public function afficheMesDemande(){
+    $proprietaire = $this->session->get_userdata();
+    $data['photos'] = $this->Appartements_model->afficherPhoto();
+    $data["mesLocations"] = $this->Appartements_model->obtenir_mesDemande($proprietaire['nomUsager']);
+    $this->load->view("appartement/mesDemandes.php", $data);
+  }
+
+  /**
   * Afficher la liste des locations de l'usager
   */
   public function demandeLocationEnCours(){

@@ -53,7 +53,8 @@ class Appartements_model extends CI_Model {
     $query4 = $this->db->insert('photo', array("detailPhoto" => $detail2,"Chemin" => $image2,"idAppart" => $id));
     $query5 = $this->db->insert('photo', array("detailPhoto" => $detail3,"Chemin" => $image3,"idAppart" => $id));
     $query6 = $this->db->insert('photo', array("detailPhoto" => $detail4,"Chemin" => $image4,"idAppart" => $id));
-    if ($query1 && $query2 && $query3 && $query4 && $query5 && $query6) return true;
+    $query7 = $this->db->insert('noter', array("Note" => 0,"nomUsager" => $proprietaire,"idAppart" => $id));
+    if ($query1 && $query2 && $query3 && $query4 && $query5 && $query6 && $query7) return true;
   }
 
   /**
@@ -101,6 +102,15 @@ class Appartements_model extends CI_Model {
   public function obtenir_location($nomUsager){
      $query = $this->db->query("select * from location join appartement on appartement.idAppart=location.idAppart where appartement.Proprietaire='" . $nomUsager . "'");
   return $query->result();
+  }
+
+  /**
+  * @param $nomUsager
+  * @return toutes les demandes de location d'un usager
+  */
+  public function obtenir_mesDemande($nomUsager){
+    $query = $this->db->query("select * from location join appartement on appartement.idAppart=location.idAppart where Locataire='" . $nomUsager . "'");
+    return $query->result();
   }
     
   /**
@@ -150,7 +160,13 @@ class Appartements_model extends CI_Model {
 
     $query3 = $this->db->where('idAppart', $id);
     $query4 = $this->db->delete('photo');
-   if($query1 && $query2 && $query3 && $query4)
+
+    $query5 = $this->db->where('idAppart', $id);
+    $query6 = $this->db->delete('location');
+
+    $query7 = $this->db->where('idAppart', $id);
+    $query8 = $this->db->delete('disponibilite');
+   if($query1 && $query2 && $query3 && $query4 && $query5 && $query6 && $query7 && $query8)
      return true;
    else
     return false;

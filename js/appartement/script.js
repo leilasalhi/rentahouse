@@ -257,7 +257,6 @@ window.addEventListener("load", function() {
   //affichage des disponibilités pour un appartement choisi
   $(document).on("click", "button#idAppart", function(evt) {
     var id = $(this).attr('value');
-    console.log(id);
     $.ajax({
       url: "dateDispo",
       type: "POST",
@@ -299,46 +298,41 @@ window.addEventListener("load", function() {
 
     //clique sur le bouton pour enregistrer une disponibilité avec le prix de location
     $(document).on("click", "button#mettreEnLocation", function(evt) {
-      console.log(id);
       validerlogementAlouer($(this).parents(".formulaireAlouer"),id);
     });
   });
 
   //fonction de validation formulaire pour mettre un appartement disponibilte 
-function validerlogementAlouer(formulaire,id){
-  var valideAlouer = true;
-  formulaire.children("div").each(function() {
-    var valeur = $(this).find(".champ");
-    if (valeur.val() == "") {
-      valeur.addClass("incorrect");
-      $(this).find(".echec").text("Ce champ ne peut pas être vide");
-      valideAlouer = false;
-    } 
-  });
-
-  if (valideAlouer){
-    $.ajax({
-      url: "louerLogement",
-      type: "POST",
-      data :{
-        "dateDebut":$('#dDebut').val(),
-        "dateFin":$('#dFin').val(),
-        "prix":$('#prix').val(),
-        "id": id,
-        "interval": $('input[name=interval]:checked').val()
-      },
-      success: function(data) {
-        $("#contentAppartement").empty();
-        $("#contentAppartement").append(data);
-      }
+  function validerlogementAlouer(formulaire,id){
+    var valideAlouer = true;
+    formulaire.children("div").each(function() {
+      var valeur = $(this).find(".champ");
+      if (valeur.val() == "") {
+        valeur.addClass("incorrect");
+        $(this).find(".echec").text("Ce champ ne peut pas être vide");
+        valideAlouer = false;
+      } 
     });
+
+    if (valideAlouer){
+      $.ajax({
+        url: "louerLogement",
+        type: "POST",
+        data :{
+          "dateDebut":$('#dDebut').val(),
+          "dateFin":$('#dFin').val(),
+          "prix":$('#prix').val(),
+          "id": id,
+          "interval": $('input[name=interval]:checked').val()
+        },
+        success: function(data) {
+          $("#contentAppartement").empty();
+          $("#contentAppartement").append(data);
+        }
+      });
+    }
   }
-}
-
-
-    
-  
-    
+   
   //afficher les demande de location en cours
   $(document).on("click",'button#validerLocation',function() {
     $.ajax({
@@ -365,13 +359,37 @@ function validerlogementAlouer(formulaire,id){
       }
     });
   });
-  
-  
-});
 
 
+//Afficher toutes les demandes de location d'un utilisateur connecté
+$(document).on("click", "#afficheMesDemande", function(evt) {
+  $.ajax({
+    url: "afficheMesDemande",
+    type: "POST",
+    success: function(data) {
+      $("#afficheMesDemande").addClass('active');
+      $("#afficheMesAppart").removeClass('active');
+      
+      $("#mesAppartements").empty();
+      $("#mesAppartements").append(data);
+    }
+  });
+  }); 
 
-
+//Afficher toutes les location faites sur un appartement d'un usager connecté
+$(document).on("click", "#afficheMesAppart", function(evt) {
+  $.ajax({
+      url: "demandeLocationEnCours",
+      type: "POST",
+      success: function(data) {
+        $("#afficheMesDemande").addClass('active');
+        $("#afficheMesAppart").removeClass('active');
+        
+        $("#contentAppartement").empty();
+        $("#contentAppartement").append(data);
+      }
+    });
+  }); 
 
 
 //fonction de validation formulaire d'ajout d'une annonce
@@ -525,3 +543,4 @@ function validerFormulaireAjout(formulaire){
     });
   }
 }
+});

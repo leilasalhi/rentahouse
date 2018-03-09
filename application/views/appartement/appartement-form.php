@@ -43,7 +43,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <input type="text" class="form-control champ" id="piece">
 		<div class="echec"></div>
  
-    <label for="etage">Nombre d'étage</label>
+    <label for="etage">Numéro d'étage</label>
     <input type="etage" class="form-control champ" id="etage">
 		<div class="echec"></div>
   </div>

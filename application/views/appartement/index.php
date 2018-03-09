@@ -8,9 +8,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <div id='contentAppartement'>
     <div class='d-flex flex-wrap justify-content-end position'>
       <button class="btn btn-success" id="ajouter">Ajouter</button>
-      <button class="btn btn-info" id="validerLocation">Mes locations</button>
+      <button class="btn btn-info" id="validerLocation">Toutes les locations</button>
     </div>
     
+    <?php if(!$appartement){?>
+      <p class="aucuneLocation">Vous n'avez aucun appartement en location</p>
+    <?php } else {?>
       <?php foreach($appartement as $appart){?>
       <div class="detailAppart">
         <div class="detailLog row">
@@ -53,16 +56,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </figure>
           </div>
         </div>
-          
+            
 
-        <div class="row afficheDispo">
-          <button class="btn btn-success " value="<?php echo $appart->idAppart;?>" id="idAppart" data-toggle="modal" data-target="#myModal2">Disponibilités</button>
-          <button class="btn btn-warning" value="<?php echo $appart->idAppart;?>" id="modifierAppart">Modifier</button>
-          <button class="btn btn-danger" value="<?php echo $appart->idAppart;?>" id="supprimerAppart" data-toggle="modal" data-target="#modalSupp">Supprimer</button>
+          <div class="row afficheDispo">
+            <button class="btn btn-success " value="<?php echo $appart->idAppart;?>" id="idAppart" data-toggle="modal" data-target="#myModal2">Disponibilités</button>
+            <button class="btn btn-warning" value="<?php echo $appart->idAppart;?>" id="modifierAppart">Modifier</button>
+            <button class="btn btn-danger" value="<?php echo $appart->idAppart;?>" id="supprimerAppart" data-toggle="modal" data-target="#modalSupp">Supprimer</button>
+          </div>
         </div>
-        
-      </div>
-    <?php } ?>  
+      <?php } ?>  
+    <?php } ?> 
   </div>
 
 
