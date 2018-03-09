@@ -33,17 +33,6 @@ window.addEventListener("load", function() {
           });
         break;
 
-        case "statistiques" :
-          $.ajax({
-            url: "statistiques",
-            method: "POST",
-            success: function(reponse) {
-              $("#content_panel").empty();
-              console.log(reponse);
-            }
-          });
-        break;
-
         case "arrondissements" :
           $.ajax({
             url: "voir_arrondissements",
@@ -61,6 +50,7 @@ window.addEventListener("load", function() {
             method: "POST",
             success: function(reponse) {
               $("#content_panel").empty();
+              $("#content_panel").append(reponse);
               console.log(reponse);
             }
           });

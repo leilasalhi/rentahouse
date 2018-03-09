@@ -10,6 +10,7 @@ class Gestion extends CI_Controller {
     parent::__construct();
     $this->load->model("Usagers_model");
     $this->load->model("Arrondissements_model");
+    $this->load->model("Mode_paiement_model");
     $this->load->helper("url_helper");
     $this->load->library('session');
     $this->load->helper('date');
@@ -60,13 +61,13 @@ class Gestion extends CI_Controller {
   /**
    * Affiche des statistique sur le site sous forme de vue partielle
    */
-  public function statistiques() {
-    if($this->session->userdata("nomUsager") && $this->session->userdata("idRole") < 2) {
-      echo "controlleur - 'charger statistiques'";
-    } else {
-      header("Location: ".base_url());
-    }
-  }
+  // public function statistiques() {
+  //   if($this->session->userdata("nomUsager") && $this->session->userdata("idRole") < 2) {
+  //     echo "controlleur - 'charger statistiques'";
+  //   } else {
+  //     header("Location: ".base_url());
+  //   }
+  // }
 
 
   /**
@@ -121,7 +122,18 @@ class Gestion extends CI_Controller {
    */
   public function moyensDePaiements() {
     if($this->session->userdata("nomUsager") && $this->session->userdata("idRole") < 2) {
-      echo "controlleur - 'charger liste des moyensDePaiements'";
+      $data['moyens_paiment'] = $this->Mode_paiement_model->obtenir_tous();
+      $this->load->view("gestion/liste-moyen-paiement.php", $data);
+    } else {
+      header("Location: ".base_url());
+    }
+  }
+  /**
+   * ajoute un moyen de paiement de la BD
+   */
+  public function ajouter_moyen() {
+    if($this->session->userdata("nomUsager") && $this->session->userdata("idRole") < 2) {
+      $this->Mode_paiement_model->ajouter_moyen($this->input->post("valeur"));
     } else {
       header("Location: ".base_url());
     }
